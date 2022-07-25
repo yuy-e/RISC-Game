@@ -38,6 +38,8 @@ Activate the players:
 - Design
 [UXdocumentation.pdf](https://github.com/yuy-e/RISC-Game/files/9184885/UXdocumentation.pdf)
 
+https://github.com/yuy-e/RISC-Game/blob/main/UXdocumentation.pdf
+
 ### Eval-3 UX Views (check main branch)
 
 
