@@ -77,19 +77,13 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.get("Narnia").addAdjacency("Elantris");
     myTerritories.get("Midemio").addAdjacency("Narnia");
     myTerritories.get("Midemio").addAdjacency("Oz");
-    myTerritories.get("Midemio").addAdjacency("Elantris");
-    myTerritories.get("Midemio").addAdjacency("Scadnal");
     myTerritories.get("Oz").addAdjacency("Midemio");
-    myTerritories.get("Oz").addAdjacency("Scadnal");
+    myTerritories.get("Oz").addAdjacency("Roshar");
     myTerritories.get("Elantris").addAdjacency("Scadnal");
-    myTerritories.get("Elantris").addAdjacency("Narnia");;
-    myTerritories.get("Elantris").addAdjacency("Roshar");;
-    myTerritories.get("Elantris").addAdjacency("Midemio");
+    myTerritories.get("Elantris").addAdjacency("Narnia");
     myTerritories.get("Scadnal").addAdjacency("Roshar");
-    myTerritories.get("Scadnal").addAdjacency("Elantris");;
-    myTerritories.get("Scadnal").addAdjacency("Oz");;
-    myTerritories.get("Scadnal").addAdjacency("Midemio");
-    myTerritories.get("Roshar").addAdjacency("Elantris");
+    myTerritories.get("Scadnal").addAdjacency("Elantris");
+    myTerritories.get("Roshar").addAdjacency("Oz");
     myTerritories.get("Roshar").addAdjacency("Scadnal");
 
   }

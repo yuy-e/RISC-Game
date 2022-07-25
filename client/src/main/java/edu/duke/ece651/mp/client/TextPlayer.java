@@ -69,9 +69,7 @@ public class TextPlayer {
    * method to receive Player Color from the server
    */
   public void receiveIdentity() {
-    System.out.println("Receive Identity from Server");
     String ident = (String) connectionToMaster.receiveFromServer();
-    System.out.println("Set ident");
     setIdentity(ident);
     out.println("My player's color: " + ident);
   }
@@ -226,11 +224,11 @@ public class TextPlayer {
     return enteredOption;
   }
 
-  protected ArrayList<String> getMyOwnTerritories() {
+  private ArrayList<String> getMyOwnTerritories() {
     return theMap.getPlayerTerritories(identity);
   }
 
-  protected ArrayList<String> getOthersTerritories() {
+  private ArrayList<String> getOthersTerritories() {
     for (int index = 0; index < 2; index++) {
       String color = theMap.players_colors.get(index);
       if (!color.equals(identity)) {

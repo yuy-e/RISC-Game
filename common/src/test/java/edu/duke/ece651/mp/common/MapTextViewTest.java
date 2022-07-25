@@ -17,15 +17,17 @@ public class MapTextViewTest {
     //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
     V1Map<Character> m = new V1Map<Character>(players_colors);
     MapTextView mapView = new MapTextView(m);
-    String expected = "Green player:\n" + "-----------\n"
+    String expected = "Green player:\n"
+      + "-----------\n"
       + "8 units in Narnia (next to: Midemio, Elantris)\n"
-      + "3 units in Midemio (next to: Narnia, Oz, Elantris, Scadnal)\n"
-      + "12 units in Oz (next to: Midemio, Scadnal)\n"
+      + "3 units in Midemio (next to: Narnia, Oz)\n"
+      + "12 units in Oz (next to: Midemio, Roshar)\n"
       + "\n"
-      + "Blue player:\n" + "-----------\n"
-      + "7 units in Elantris (next to: Scadnal, Narnia, Roshar, Midemio)\n"
-      + "6 units in Roshar (next to: Elantris, Scadnal)\n"
-      + "10 units in Scadnal (next to: Roshar, Elantris, Oz, Midemio)\n";
+      + "Blue player:\n"
+      + "-----------\n"
+      + "7 units in Elantris (next to: Scadnal, Narnia)\n"
+      + "6 units in Roshar (next to: Oz, Scadnal)\n"
+      + "10 units in Scadnal (next to: Roshar, Elantris)\n";
     assertEquals(expected, mapView.displayMap());
   }
 }

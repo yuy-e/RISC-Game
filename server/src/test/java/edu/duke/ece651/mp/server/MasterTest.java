@@ -72,7 +72,7 @@ public class MasterTest {
     m.close();
     s1.close();
   }
-  @Disabled
+
   @Test
   public void test_sendMapToAll()
       throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException {

@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,15 +17,8 @@ import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
-public class Client{
+public class Client {
   final TextPlayer theTextPlayer;
 
   /**
@@ -37,19 +29,10 @@ public class Client{
     this.theTextPlayer = new TextPlayer(servername, port, inputReader, out);
   }
 
-
-
-  public TextPlayer getTheTextPlayer() {
-    return theTextPlayer;
-  }
-
   /**
-     * Main program for Client/Player
-     */
+   * Main program for Client/Player
+   */
   public static void main(String[] args) throws InterruptedException {
-    Application.launch(startpage.class, args);
-
-    /*
     try {
       System.out.println("Welcome to our game!");
       int port = args.length > 0 ? Integer.parseInt(args[1]) : 8080;
@@ -62,7 +45,7 @@ public class Client{
         theClient.theTextPlayer.initiateGame();
 
         theClient.theTextPlayer.playGame();
-
+        
         theClient.theTextPlayer.connectionToMaster.socket.close();
 
       } else {
@@ -81,13 +64,11 @@ public class Client{
         theClient.theTextPlayer.printMap();
         theClient.theTextPlayer.takeTurn();
       }
-
+      
     } catch (
 
     Exception e) {
       e.printStackTrace();
     }
-
-     */
   }
 }
