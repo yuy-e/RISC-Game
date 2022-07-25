@@ -22,6 +22,7 @@ Activate the players:
 ```
 ./client/build/install/client/bin/client
 ```
+## About the Game
 
 ## Project Development
 ### Eval-1 (check Eval1 branch)
@@ -39,8 +40,18 @@ https://github.com/yuy-e/RISC-Game/blob/main/UML-Eval2.jpg
 - Design
 https://github.com/yuy-e/RISC-Game/blob/main/UXdocumentation.pdf
 
-### Eval-3 UX Views (check main branch)
+### Eval-3 Game Preview (check main branch)
+![5981658782331_ pic_hd](https://user-images.githubusercontent.com/60654350/180886078-06c5639c-f428-47b4-9e34-60b9534e821e.jpg)
 
+![6041658782463_ pic_hd](https://user-images.githubusercontent.com/60654350/180886099-1f890152-6690-48c2-ae75-2751e31c9c83.jpg)
+
+## UX Principles
+We use the MVC design pattern and follow the following UX principles:
+
+- **Figure-Gound and Focal Point:** We set territories in different colors indicating owned by different players, and the font color of the action would turn white to indicate their choice, making our app more user-friendly.
+
+- **Similarity, Proximity, and Common Region:**
+For displaying the pane of actions and choices, we use similar boxes and place them together(in a Turn Pane) to indicate they belong to the same action.
 
 
 
