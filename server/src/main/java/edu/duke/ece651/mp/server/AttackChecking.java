@@ -1,17 +1,20 @@
 package edu.duke.ece651.mp.server;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import edu.duke.ece651.mp.common.*;
+import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.Territory;
+import edu.duke.ece651.mp.common.Turn;
+import edu.duke.ece651.mp.common.TurnList;
 
 public class AttackChecking<T> {
   String attackStatus;
 
-  public ArrayList<AttackTurn> checkMyRule(Map<T> map, ArrayList<AttackTurn> attackOrder,FoodResourceList foodResourceList) {
-    ArrayList<AttackTurn> ans = new ArrayList<AttackTurn>();
-    for (AttackTurn t : attackOrder) {
-      boolean b = checkMyRule(map, t,foodResourceList);
+
+  public ArrayList<Turn> checkMyRule(Map<T> map, ArrayList<Turn> attackOrder) {
+    ArrayList<Turn> ans = new ArrayList<Turn>();
+    for (Turn t : attackOrder) {
+      boolean b = checkMyRule(map, t);
       if (b) {
         ans.add(t);
       }
@@ -19,24 +22,18 @@ public class AttackChecking<T> {
     return ans;
   }
 
-  public boolean checkMyRule(Map<T> map, AttackTurn attackOrder, FoodResourceList foodResourceList) {
+  public boolean checkMyRule(Map<T> map, Turn attackOrder) {
+    int attackingunits = attackOrder.getNumber();
     String source = attackOrder.getSource();
     String destination = attackOrder.getDestination();
     String player_color = attackOrder.getPlayerColor();
-    HashMap<String, Integer> num_units = attackOrder.getUnitList();
-
 
     Territory<T> attacker = map.getAllTerritories().get(source);
-    int size= attacker.getSize();
     Territory<T> defender = map.getAllTerritories().get(destination);
 
-    String attack_units_info = "";
-    for (HashMap.Entry<String, Integer> set : num_units.entrySet()) {
-      attack_units_info += set.getValue() + set.getKey() + " ";
-    }
-
     attackStatus = player_color + ": Attack order from "
-        + source + " into " + destination + " with ( " + attack_units_info + ") units was ";
+        + source + " into " + destination + " with "
+        + attackingunits + " units was ";
 
     // check if the source belongs to the attacker
     if (!attacker.getColor().equals(player_color)) {
@@ -56,21 +53,9 @@ public class AttackChecking<T> {
       return false;
     }
 
-    // check if the attacker has enough units
-    for (HashMap.Entry<String, Integer> set : num_units.entrySet()) {
-      if (attacker.getUnit(set.getKey()) < set.getValue()) {
-        attackStatus += "invalid as attacker doesn't have enough " + set.getKey() + " units";
-        return false;
-      }
-    }
-
-    //  check if the attacker has enough food resource
-    int unitSum=0;
-    for(HashMap.Entry<String, Integer> set : num_units.entrySet()){
-      unitSum+=set.getValue();
-    }
-    if(unitSum*size>foodResourceList.resource_list.get(player_color).getResourceAmount()){
-      attackStatus += "invalid as available food resource is not enough";
+    // check if the attcker has enough units
+    if (attacker.getUnit() < attackingunits) {
+      attackStatus += "invalid as attacker doesn't have enough units";
       return false;
     }
 

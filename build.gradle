@@ -20,8 +20,6 @@ allprojects{
         clover 'org.openclover:clover:4.4.1'
     }
 }
-
-
 clover{
     compiler {
         additionalArgs = "-g:lines,source,vars"

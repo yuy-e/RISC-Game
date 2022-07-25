@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
-import edu.duke.ece651.mp.common.V2Map;
+import edu.duke.ece651.mp.common.V1Map;
 
 public class TextPlayerTest {
   @Disabled
@@ -30,11 +30,11 @@ public class TextPlayerTest {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     //OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
     //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
-    V2Map<Character> m = new V2Map<Character>(players_colors);
+    V1Map<Character> m = new V1Map<Character>(players_colors);
     player.setIdentity("Green");
     player.updateMap(m);
 
-    //player.takeTurn();
+    player.takeTurn();
     String expected = "You are the Green player and it's time to take your turn!.\n"
       + "There are two types of orders that you may issue: move and attack.You may issue any number of each type of these orders in a turn.Once you're done enetering your orders, hit D and your turn will be sent to the server.\n\n"
       + "\nEnter new order (M or A or D)\n"

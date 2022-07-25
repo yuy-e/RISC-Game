@@ -5,10 +5,26 @@ package edu.duke.ece651.mp.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.net.URL;
 import java.net.UnknownHostException;
-import javafx.application.Application;
+import java.util.ArrayList;
+import java.util.Arrays;
 
+import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.OwnerChecking;
+import edu.duke.ece651.mp.common.PathChecking;
+import edu.duke.ece651.mp.common.V1Map;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class Client{
   final TextPlayer theTextPlayer;
@@ -20,6 +36,7 @@ public class Client{
       throws IOException, UnknownHostException {
     this.theTextPlayer = new TextPlayer(servername, port, inputReader, out);
   }
+
 
 
   public TextPlayer getTheTextPlayer() {
@@ -59,7 +76,7 @@ public class Client{
         //OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
         //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
 
-        V2Map<Character> mapFromServer = new V2Map<Character>(players_colors);
+        V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
         theClient.theTextPlayer.updateMap(mapFromServer);
         theClient.theTextPlayer.printMap();
         theClient.theTextPlayer.takeTurn();
@@ -70,6 +87,7 @@ public class Client{
     Exception e) {
       e.printStackTrace();
     }
+
      */
   }
 }

@@ -1,40 +1,139 @@
 package edu.duke.ece651.mp.client;
 
-import edu.duke.ece651.mp.common.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import edu.duke.ece651.mp.common.AttackTurn;
+import edu.duke.ece651.mp.common.MoveTurn;
+import edu.duke.ece651.mp.common.Territory;
+import edu.duke.ece651.mp.common.Turn;
+import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.V1Map;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
+import javafx.stage.Popup;
 
 public class GameController {
+  @FXML
+  public TextArea turnstatus;
+  @FXML
+  public TextArea errormessage;
+  // Stack panes holding all territory elements
+  @FXML
+  private StackPane Territory1;
+  @FXML
+  private StackPane Territory2;
+  @FXML
+  private StackPane Territory3;
+  @FXML
+  private StackPane Territory4;
+  @FXML
+  private StackPane Territory5;
+  @FXML
+  private StackPane Territory6;
+
+  // Shaped for rectangular boxes in the map representing territories
+  @FXML
+  private Shape Terr1Box;
+  @FXML
+  private Shape Terr2Box;
+  @FXML
+  private Shape Terr3Box;
+  @FXML
+  private Shape Terr4Box;
+  @FXML
+  private Shape Terr5Box;
+  @FXML
+  private Shape Terr6Box;
+
+  private ArrayList<Shape> terrBoxes;
 
   // Text fields to show territory names in map
   @FXML
-  private Button Terr1Button;
+  private TextField Terr1Name;
   @FXML
-  private Button Terr2Button;
+  private TextField Terr2Name;
   @FXML
-  private Button Terr3Button;
+  private TextField Terr3Name;
   @FXML
-  private Button Terr4Button;
+  private TextField Terr4Name;
   @FXML
-  private Button Terr5Button;
+  private TextField Terr5Name;
   @FXML
-  private Button Terr6Button;
+  private TextField Terr6Name;
 
-  private ArrayList<Button> terrButtons;
+  private ArrayList<TextField> terrNames;
 
-  private HashMap<String, Button> TerritoryButtons;
-  private ArrayList<String> TerritoryNames;
+  // Text fields to show territory units
+  @FXML
+  private TextField Terr1Units;
+  @FXML
+  private TextField Terr2Units;
+  @FXML
+  private TextField Terr3Units;
+  @FXML
+  private TextField Terr4Units;
+  @FXML
+  private TextField Terr5Units;
+  @FXML
+  private TextField Terr6Units;
+
+  private ArrayList<TextField> terrUnits;
+
+  private HashMap<String, Shape> TerritoryBoxes;
+  private HashMap<String, TextField> TerritoryNames;
+  private HashMap<String, TextField> TerritoryUnits;
+
+  // Lines between rectangles to show adjacency
+  @FXML
+  private Line Line1to2;
+  @FXML
+  private Line Line1to3;
+  @FXML
+  private Line Line1to4;
+  @FXML
+  private Line Line1to5;
+  @FXML
+  private Line Line1to6;
+  @FXML
+  private Line Line2to3;
+  @FXML
+  private Line Line2to4;
+  @FXML
+  private Line Line2to5;
+  @FXML
+  private Line Line2to6;
+  @FXML
+  private Line Line3to4;
+  @FXML
+  private Line Line3to5;
+  @FXML
+  private Line Line3to6;
+  @FXML
+  private Line Line4to5;
+  @FXML
+  private Line Line4to6;
+  @FXML
+  private Line Line5to6;
+
+  // The first key in the string is from territory, and the second key is to
+  // territory
+  private HashMap<String, HashMap<String, Line>> TerritoryAdjacency;
 
   // Text field to show game status
   @FXML
@@ -42,58 +141,23 @@ public class GameController {
 
   /**
    * Method to setup the map in the UI
-   *
+   * 
    */
   public void setUpMap() {
-    V2Map<Character> initialMap = theTextPlayer.theMap;
-    // setPlayerResourceView();
-    setPlayerResourceDisplay();
+    V1Map<Character> initialMap = theTextPlayer.theMap;
     setUpTerritories(initialMap);
   }
 
   /**
    * Method to setup territories
    */
-  private void setUpTerritories(V2Map<Character> initialMap) {
+  private void setUpTerritories(V1Map<Character> initialMap) {
     // setup name, units and color of each territory first
     initTerritories(initialMap);
-  }
 
-  private void setTerritoryDetailsDisplay(String terrName) {
-    Territory curTerr = theTextPlayer.theMap.getAllTerritories().get(terrName);
-    int foodnum = curTerr.getFoodNum();
-    int technum = curTerr.getTechNum();
-    ArrayList<Unit> unit_list = curTerr.getUnitList();
+    // draw lines between territories for showing adjacency
+    setAdjacency(initialMap);
 
-    for (String unit : UnitNums.keySet()) {
-      UnitNums.get(unit).setText(Integer.toString(0)); // default: 0
-      for (Unit u : unit_list) {
-        if (unit.equals(u.getUnitType())) {
-          UnitNums.get(unit).setText(Integer.toString(u.getUnitNum()));
-          break;
-        }
-      }
-    }
-    terrfood.setText(Integer.toString(foodnum));
-    terrtech.setText(Integer.toString(technum));
-
-    // show if the player has any spy in this enemy territory
-
-    // print fog of war spy map
-    System.out.println("**********SPY MAP********");
-    for (String color : theTextPlayer.theMap.spy_map.keySet()) {
-      System.out.println("Player: " + color);
-      for (String terrString : theTextPlayer.theMap.spy_map.get(color).keySet()) {
-        System.out.println("Spy in " + terrString);
-      }
-    }
-
-    if (theTextPlayer.theMap.spy_map.get(theTextPlayer.identity).containsKey(terrName)) {
-      // if this territory exists in the player's spy map
-      int spyNum = theTextPlayer.theMap.spy_map.get(theTextPlayer.identity).get(terrName);
-      // System.out.println(terrName + "has " + spyNum);
-      UnitNums.get("MySpies").setText(Integer.toString(spyNum));
-    }
   }
 
   ArrayList<StringProperty> terrUnitsList = new ArrayList<>();
@@ -101,20 +165,20 @@ public class GameController {
   /**
    * Method to initialize the hashmaps
    */
-  private void initTerritories(V2Map<Character> initialMap) {
+  private void initTerritories(V1Map<Character> initialMap) {
     // init lists with Java FX components
     initLists();
-    System.out.println("In initTerritories");
+
     HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();
 
     // organize the territories according to player color
     HashMap<String, ArrayList<String>> terrGroups = initialMap.getOwnersTerritoryGroups();
 
-    // TerritoryButtons = new HashMap<>();
-    TerritoryNames = new ArrayList();
+    TerritoryBoxes = new HashMap<>();
+    TerritoryNames = new HashMap<>();
+    TerritoryUnits = new HashMap<>();
     int i = 0;
-    // System.out.println(terrGroups.keySet());
-    for (String player_color : terrGroups.keySet()) {
+    for (String player_color : initialMap.getPlayerColors()) {
       Color terrColor = Color.WHITE; // default
       if (player_color.equals("Green")) {
         terrColor = Color.GREEN;
@@ -123,22 +187,13 @@ public class GameController {
       }
       // get territories of this player color
       ArrayList<String> terrList = terrGroups.get(player_color);
-      // System.out.println(player_color + ": " + terrList);
       for (String terrName : terrList) {
-        String button_style = "-fx-background-color: rgba(240,240,240,.3)"; // default: white
-
-        if (terrColor == Color.GREEN) {
-          button_style = "-fx-background-color: rgba(60,179,113,.3)";
-          System.out.println(terrName + ": green");
-        } else if (terrColor == Color.BLUE) {
-          button_style = "-fx-background-color: rgba(0,0,255,.3)";
-          System.out.println(terrName + ": blue");
-        }
-
-        // Button curbutton = TerritoryButtons.get(terrName);
-        TerritoryButtons.get(terrName).setStyle(button_style);
-        // TerritoryButtons.put(terrName, curbutton);
-        TerritoryNames.add(terrName);
+        terrBoxes.get(i).setFill(terrColor);
+        terrNames.get(i).setText(terrName);
+        terrUnits.get(i).setText(Integer.toString(allTerritories.get(terrName).getUnit()));
+        TerritoryBoxes.put(terrName, terrBoxes.get(i));
+        TerritoryNames.put(terrName, terrNames.get(i));
+        TerritoryUnits.put(terrName, terrUnits.get(i));
         i++;
       }
     }
@@ -149,52 +204,124 @@ public class GameController {
    */
   private void initLists() {
     // Add rectangles
+    terrBoxes = new ArrayList<Shape>();
+    terrBoxes.add(Terr1Box);
+    terrBoxes.add(Terr2Box);
+    terrBoxes.add(Terr3Box);
+    terrBoxes.add(Terr4Box);
+    terrBoxes.add(Terr5Box);
+    terrBoxes.add(Terr6Box);
 
-    terrButtons = new ArrayList<Button>();
-    terrButtons.add(Terr1Button);
-    terrButtons.add(Terr2Button);
-    terrButtons.add(Terr3Button);
-    terrButtons.add(Terr4Button);
-    terrButtons.add(Terr5Button);
-    terrButtons.add(Terr6Button);
+    // Add names
+    terrNames = new ArrayList<TextField>();
+    terrNames.add(Terr1Name);
+    terrNames.add(Terr2Name);
+    terrNames.add(Terr3Name);
+    terrNames.add(Terr4Name);
+    terrNames.add(Terr5Name);
+    terrNames.add(Terr6Name);
 
-    TerritoryButtons = new HashMap<String, Button>();
-    TerritoryButtons.put("Narnia", terrButtons.get(0));
-    TerritoryButtons.put("Midemio", terrButtons.get(1));
-    TerritoryButtons.put("Oz", terrButtons.get(2));
-    TerritoryButtons.put("Elantris", terrButtons.get(3));
-    TerritoryButtons.put("Roshar", terrButtons.get(4));
-    TerritoryButtons.put("Scadnal", terrButtons.get(5));
+    // Add units
+    terrUnits = new ArrayList<TextField>();
+    terrUnits.add(Terr1Units);
+    terrUnits.add(Terr2Units);
+    terrUnits.add(Terr3Units);
+    terrUnits.add(Terr4Units);
+    terrUnits.add(Terr5Units);
+    terrUnits.add(Terr6Units);
+  }
 
-    // add UnitsTypes hashMap
-    UnitNums = new HashMap<String, Label>();
-    UnitNums.put("Guards", unit1num);
-    UnitNums.put("Infantry", unit2num);
-    UnitNums.put("SPY", unit8num);
-    UnitNums.put("Archer", unit3num);
-    UnitNums.put("Cavalry", unit4num);
-    UnitNums.put("Dwarves", unit5num);
-    UnitNums.put("Orcs", unit6num);
-    UnitNums.put("Elves", unit7num);
-    UnitNums.put("MySpies", mySpiesNum);
+  /**
+   * Method to draw lines between territories in the UI based on their adjacency
+   */
+  private void setAdjacency(V1Map<Character> initialMap) {
+    initAdjacencyList();
+
+    HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();
+    // get adjacency for each
+    for (String terrName : allTerritories.keySet()) {
+      ArrayList<String> adjacentTerr = allTerritories.get(terrName).getAdjacency();
+      // for each adjacent territory
+      for (String adjTerr : adjacentTerr) {
+        TerritoryAdjacency.get(terrName).get(adjTerr).setVisible(true);
+      }
+    }
+  }
+
+  /**
+   * method to create the adjacency map
+   */
+  private void initAdjacencyList() {
+    String fromTerritory;
+
+    TerritoryAdjacency = new HashMap<>();
+
+    // Territory 1
+    fromTerritory = terrNames.get(0).getText();
+    HashMap<String, Line> terr1Adj = new HashMap<>();
+    terr1Adj.put(terrNames.get(1).getText(), Line1to2);
+    terr1Adj.put(terrNames.get(2).getText(), Line1to3);
+    terr1Adj.put(terrNames.get(3).getText(), Line1to4);
+    terr1Adj.put(terrNames.get(4).getText(), Line1to5);
+    terr1Adj.put(terrNames.get(5).getText(), Line1to6);
+    TerritoryAdjacency.put(fromTerritory, terr1Adj);
+
+    // Territory 2
+    fromTerritory = terrNames.get(1).getText();
+    HashMap<String, Line> terr2Adj = new HashMap<>();
+    terr2Adj.put(terrNames.get(0).getText(), Line1to2);
+    terr2Adj.put(terrNames.get(2).getText(), Line2to3);
+    terr2Adj.put(terrNames.get(3).getText(), Line2to4);
+    terr2Adj.put(terrNames.get(4).getText(), Line2to5);
+    terr2Adj.put(terrNames.get(5).getText(), Line2to6);
+    TerritoryAdjacency.put(fromTerritory, terr2Adj);
+
+    // Territory 3
+    fromTerritory = terrNames.get(2).getText();
+    HashMap<String, Line> terr3Adj = new HashMap<>();
+    terr3Adj.put(terrNames.get(0).getText(), Line1to3);
+    terr3Adj.put(terrNames.get(1).getText(), Line2to3);
+    terr3Adj.put(terrNames.get(3).getText(), Line3to4);
+    terr3Adj.put(terrNames.get(4).getText(), Line3to5);
+    terr3Adj.put(terrNames.get(5).getText(), Line3to6);
+    TerritoryAdjacency.put(fromTerritory, terr3Adj);
+
+    // Territory 4
+    fromTerritory = terrNames.get(3).getText();
+    HashMap<String, Line> terr4Adj = new HashMap<>();
+    terr4Adj.put(terrNames.get(0).getText(), Line1to4);
+    terr4Adj.put(terrNames.get(1).getText(), Line2to4);
+    terr4Adj.put(terrNames.get(2).getText(), Line3to4);
+    terr4Adj.put(terrNames.get(4).getText(), Line4to5);
+    terr4Adj.put(terrNames.get(5).getText(), Line4to6);
+    TerritoryAdjacency.put(fromTerritory, terr4Adj);
+
+    // Territory 5
+    fromTerritory = terrNames.get(4).getText();
+    HashMap<String, Line> terr5Adj = new HashMap<>();
+    terr5Adj.put(terrNames.get(0).getText(), Line1to5);
+    terr5Adj.put(terrNames.get(1).getText(), Line2to5);
+    terr5Adj.put(terrNames.get(2).getText(), Line3to5);
+    terr5Adj.put(terrNames.get(3).getText(), Line4to5);
+    terr5Adj.put(terrNames.get(5).getText(), Line5to6);
+    TerritoryAdjacency.put(fromTerritory, terr5Adj);
+
+    // Territory 6
+    fromTerritory = terrNames.get(5).getText();
+    HashMap<String, Line> terr6Adj = new HashMap<>();
+    terr6Adj.put(terrNames.get(0).getText(), Line1to6);
+    terr6Adj.put(terrNames.get(1).getText(), Line2to6);
+    terr6Adj.put(terrNames.get(2).getText(), Line3to6);
+    terr6Adj.put(terrNames.get(3).getText(), Line4to6);
+    terr6Adj.put(terrNames.get(4).getText(), Line5to6);
+    TerritoryAdjacency.put(fromTerritory, terr6Adj);
+
   }
 
   private TextPlayer theTextPlayer;
-  ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade", "Cloak");
+  ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
   ObservableList<String> source_list = FXCollections.observableArrayList();
   ObservableList<String> destination_list = FXCollections.observableArrayList();
-  ObservableList<String> unitType_list = FXCollections.observableArrayList();
-  ObservableList<Integer> unitANum_list = FXCollections.observableArrayList();
-  ObservableList<Integer> unitBNum_list = FXCollections.observableArrayList();
-  ObservableList<Integer> unitCNum_list = FXCollections.observableArrayList();
-  ObservableList<Integer> unitDNum_list = FXCollections.observableArrayList();
-  ObservableList<Integer> unitENum_list = FXCollections.observableArrayList();
-  ObservableList<Integer> unitFNum_list = FXCollections.observableArrayList();
-  ObservableList<Integer> unitGNum_list = FXCollections.observableArrayList();
-  ObservableList<Integer> spyNum_list = FXCollections.observableArrayList();;
-  ObservableList<Integer> mySpyInEnemyNum_list = FXCollections.observableArrayList();
-
-  ObservableList<Integer> upgradeNum_list = FXCollections.observableArrayList();
 
   TurnList myTurn;
 
@@ -203,87 +330,15 @@ public class GameController {
   @FXML
   private ComboBox<String> playeraction;
   @FXML
-  private Button order;
-  @FXML
-  private Button commit;
-  @FXML
-  public TextArea turnstatus;
-  @FXML
-  public TextArea errormessage;
-
-  // Move and Attack order inputs
-  @FXML
-  private Pane MoveAttackPane;
-  @FXML
   private ComboBox<String> from;
   @FXML
   private ComboBox<String> to;
   @FXML
-  private ComboBox<Integer> Units_A;
+  private TextField unit;
   @FXML
-  private ComboBox<Integer> Units_B;
+  private Button order;
   @FXML
-  private ComboBox<Integer> Units_C;
-  @FXML
-  private ComboBox<Integer> Units_D;
-  @FXML
-  private ComboBox<Integer> Units_E;
-  @FXML
-  private ComboBox<Integer> Units_F;
-  @FXML
-  private ComboBox<Integer> Units_G;
-  @FXML
-  private ComboBox<Integer> SPY;
-
-  private HashMap<String, ComboBox<Integer>> UnitTypeEntries;
-
-  // Upgrade Order inputs
-  @FXML
-  private Pane UpgradePane;
-  @FXML
-  private ComboBox<Integer> UpgradeUnits;
-  @FXML
-  private ComboBox<String> UpgradeTerritory;
-  @FXML
-  private ComboBox<String> UpgradeFrom;
-  @FXML
-  private ComboBox<String> UpgradeTo;
-  // cloaking order inputs
-  @FXML
-  public Pane CloakingPane;
-  @FXML
-  public ComboBox<String> CloakingTerritory;
-
-  @FXML
-  private Label totalfood;
-  @FXML
-  private Label totaltech;
-
-  @FXML
-  private Label unit1num;
-  @FXML
-  private Label unit2num;
-  @FXML
-  private Label unit3num;
-  @FXML
-  private Label unit4num;
-  @FXML
-  private Label unit5num;
-  @FXML
-  private Label unit6num;
-  @FXML
-  private Label unit7num;
-  @FXML
-  private Label unit8num;
-  @FXML
-  private Label mySpiesNum;
-
-  private HashMap<String, Label> UnitNums;
-
-  @FXML
-  private Label terrfood;
-  @FXML
-  private Label terrtech;
+  private Button commit;
 
   public void setPlayer(TextPlayer player) {
     theTextPlayer = player;
@@ -292,7 +347,6 @@ public class GameController {
   public void initGame() {
     // Step-1 of playGame()
     theTextPlayer.receiveMap();
-    theTextPlayer.receiveResource();
     setUpMap();
 
     // Step-2 of playGame()
@@ -301,46 +355,10 @@ public class GameController {
 
     setName();
     myTurn = new TurnList(theTextPlayer.identity);
-
-    initiateUnitList();
-    setOrderPane();
-  }
-
-  /**
-   * Method to set up all the entry boxes for taking order
-   */
-  private void setOrderPane() {
     setActionBox();
-    setTerritoryDropDowns();
-    setUnitTypeBox();
-  }
-
-  /**
-   * Method to set up drop downs for territories
-   */
-  private void setTerritoryDropDowns() {
-    setSourceBox(from);
-    setSourceBox(UpgradeTerritory);
-    setSourceBox(CloakingTerritory);
+    setSourceBox();
     setDestinationBox();
-    disableUnitsNumBox();
-    // disable upgrade num box
-    // UpgradeUnits.setDisable(true);
-  }
 
-  /**
-   * Method to create a list pf all unit type textfield entries
-   */
-  private void initiateUnitList() {
-    UnitTypeEntries = new HashMap<>();
-    UnitTypeEntries.put("Guards", Units_A);
-    UnitTypeEntries.put("Infantry", Units_B);
-    UnitTypeEntries.put("SPY", SPY);
-    UnitTypeEntries.put("Archer", Units_C);
-    UnitTypeEntries.put("Cavalry", Units_D);
-    UnitTypeEntries.put("Dwarves", Units_E);
-    UnitTypeEntries.put("Orcs", Units_F);
-    UnitTypeEntries.put("Elves", Units_G);
   }
 
   public void setName() {
@@ -348,32 +366,15 @@ public class GameController {
     player_info.setText(name);
   }
 
-  Tooltip playerResourceTooltip;
-
-  /**
-   * Method to display player's resources
-   */
-  private void setPlayerResourceDisplay() {
-    int food = theTextPlayer.getTotalFoodResourceAmount();
-    int tech = theTextPlayer.getTotalTechResourceAmount();
-    totalfood.setText(Integer.toString(food));
-    totaltech.setText(Integer.toString(tech));
-  }
-
-  /**
-   * Method to update player resources display
-   */
-  private void updatePlayerResourceDisplay() {
-    setPlayerResourceDisplay();
-  }
-
   @FXML
   public void setActionBox() {
+    playeraction.setValue("Move");
     playeraction.setItems(playeraction_list);
     playeraction.valueProperty().addListener(new ChangeListener<String>() {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        setTerritoryDropDowns();
+        setSourceBox();
+        setDestinationBox();
       }
     });
   }
@@ -383,49 +384,27 @@ public class GameController {
   }
 
   @FXML
-  public void setSourceBox(ComboBox<String> whichBox) {
+  public void setSourceBox() {
     ArrayList<String> own_territory_list = theTextPlayer.getMyOwnTerritories();
     source_list.clear();
-
     source_list.addAll(own_territory_list);
-    source_list.addAll(theTextPlayer.getOthersTerritories());
-
-    whichBox.setItems(source_list);
-    whichBox.valueProperty().addListener(new ChangeListener<String>() {
-      @Override
-      public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        setUnitTypeBox();
-        setUnitsNumBox();
-      }
-    });
+    from.setItems(source_list);
   }
 
   public String getSource() {
     return (String) from.getValue();
   }
 
-  public String getUpgradeSource() {
-    return (String) UpgradeTerritory.getValue();
-  }
-
-  public String getCloakingTerritory() {
-    return (String) CloakingTerritory.getValue();
-  }
-
   @FXML
   public void setDestinationBox() {
     ArrayList<String> des_territory_list = new ArrayList<String>();
-    if (getAction() != null) {
-      if (getAction().equals("Move")) {
-        des_territory_list = theTextPlayer.getMyOwnTerritories();
-      } else if (getAction().equals("Attack")) {
-        des_territory_list = theTextPlayer.getOthersTerritories();
-      }
+    if (getAction().equals("Move")) {
+      des_territory_list = theTextPlayer.getMyOwnTerritories();
+    } else if (getAction().equals("Attack")) {
+      des_territory_list = theTextPlayer.getOthersTerritories();
     }
     destination_list.clear();
-    // destination_list.addAll(des_territory_list);
-    destination_list.addAll(theTextPlayer.getMyOwnTerritories());
-    destination_list.addAll(theTextPlayer.getOthersTerritories());
+    destination_list.addAll(des_territory_list);
     to.setItems(destination_list);
   }
 
@@ -433,151 +412,8 @@ public class GameController {
     return (String) to.getValue();
   }
 
-  /**
-   * Method to set the unit type boxes for Upgrade Turn
-   */
-  public void setUnitTypeBox() {
-    ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getUpgradeSource());
-    unitType_list.clear();
-    unitType_list.addAll(own_unitType_list);
-    // upgrade from should be showing units owned by the territory
-    UpgradeFrom.setItems(unitType_list);
-
-    // upgrade to should be should be showing all the available levels
-    unitType_list.clear();
-    unitType_list.addAll(theTextPlayer.theMap.AllUnitTypes);
-    UpgradeTo.setItems(unitType_list);
-
-  }
-
-  /*
-   * public void setUpgradeUnitNumTypeBox(){ String currTerrName =
-   * getUpgradeSource(); String currUnitType = getUpgradeFromUnitType();
-   * ArrayList<Unit> unitList =
-   * theTextPlayer.theMap.getAllTerritories().get(currTerrName).getUnitList();
-   * for(Unit u: unitList){ if(u.getUnitType().equals(currUnitType)){ int
-   * availableUpgradeNum = u.getUnitNum(); if(availableUpgradeNum != 0){
-   * UpgradeUnits.setDisable(false); } for(int i=1; i<=availableUpgradeNum; i++){
-   * upgradeNum_list.add(i); } UpgradeUnits.setItems(upgradeNum_list);
-   * 
-   * break; } } }
-   */
-
-  public void setUnitsNumBox() {
-    unitANum_list.clear();
-    unitBNum_list.clear();
-    unitCNum_list.clear();
-    unitDNum_list.clear();
-    unitENum_list.clear();
-    unitFNum_list.clear();
-    unitGNum_list.clear();
-    spyNum_list.clear();
-    mySpyInEnemyNum_list.clear();
-    upgradeNum_list.clear();
-
-    String currTerrName = getSource();
-    // System.out.println("Current source:" + currTerrName);
-
-    boolean upgradeLayout = false;
-    if (currTerrName == null) {
-      currTerrName = getUpgradeSource();
-      upgradeLayout = true;
-    }
-    // In a layout with source and destination
-
-    ArrayList<Unit> unitList = theTextPlayer.theMap.getAllTerritories().get(currTerrName).getUnitList();
-    Integer totalUnits = 0;
-    for (Unit u : unitList) {
-      if (!upgradeLayout) { // in a lau=yout with source and destination
-        if (u.getUnitType().equals("Guards")) {
-          setUnitNumBox(unitANum_list, Units_A, u.getUnitNum());
-        } else if (u.getUnitType().equals("Infantry")) {
-          setUnitNumBox(unitBNum_list, Units_B, u.getUnitNum());
-        } else if (u.getUnitType().equals("Archer")) {
-          setUnitNumBox(unitCNum_list, Units_C, u.getUnitNum());
-        } else if (u.getUnitType().equals("Cavalry")) {
-          setUnitNumBox(unitDNum_list, Units_D, u.getUnitNum());
-        } else if (u.getUnitType().equals("Dwarves")) {
-          setUnitNumBox(unitENum_list, Units_E, u.getUnitNum());
-        } else if (u.getUnitType().equals("Orcs")) {
-          setUnitNumBox(unitFNum_list, Units_F, u.getUnitNum());
-        } else if (u.getUnitType().equals("Elves")) {
-          setUnitNumBox(unitGNum_list, Units_G, u.getUnitNum());
-        } else if (u.getUnitType().equals("SPY")) {
-          setUnitNumBox(spyNum_list, SPY, u.getUnitNum());
-        }
-      }
-      totalUnits += u.getUnitNum();
-    }
-
-    // since the player can move into an enemy territory, we need to check the spy
-    // map
-    // and add that in the SPY field
-    if (theTextPlayer.theMap.spy_map.get(theTextPlayer.identity).containsKey(currTerrName)) {
-      // if this territory exists in the player's spy map
-      int spyNum = theTextPlayer.theMap.spy_map.get(theTextPlayer.identity).get(currTerrName);
-      setUnitNumBox(mySpyInEnemyNum_list, SPY, spyNum);
-    }
-
-    // update the Upgrade units box
-    System.out.println("Total units for upgrade:" + totalUnits);
-    setUnitNumBox(upgradeNum_list, UpgradeUnits, totalUnits);
-  }
-
-  public void disableUnitsNumBox() {
-    for (HashMap.Entry<String, ComboBox<Integer>> unit : UnitTypeEntries.entrySet()) {
-      unit.getValue().setDisable(true);
-    }
-    UpgradeUnits.setDisable(true);
-  }
-
-  public void setUnitNumBox(ObservableList<Integer> numList, ComboBox<Integer> whichBox, Integer num) {
-    if (num != 0) {
-      whichBox.setDisable(false);
-    }
-    for (int i = 1; i <= num; i++) {
-      numList.add(i);
-    }
-    whichBox.setItems(numList);
-  }
-
-  /**
-   * Method to get the unit type selected
-   */
-  public String getUpgradeFromUnitType() {
-    return UpgradeFrom.getValue();
-  }
-
-  /**
-   * Method to get the unit type selected
-   */
-  public String getUpgradeToUnitType() {
-    return UpgradeTo.getValue();
-  }
-
-  /**
-   * Method to get user entered unit number
-   *
-   * @param which textfield
-   */
-  public int getUnitNum(ComboBox<Integer> UnitType) {
-    int enteredVal;
-    try {
-      enteredVal = Integer.parseInt(String.valueOf(UnitType.getValue()));
-    } catch (NumberFormatException e) {
-      enteredVal = 0;
-    }
-    return enteredVal;
-  }
-
-  public int getUnitNum(TextField UnitType) {
-    int enteredVal;
-    try {
-      enteredVal = Integer.parseInt(UnitType.getText());
-    } catch (NumberFormatException e) {
-      enteredVal = 0;
-    }
-    return enteredVal;
+  public int getUnitNum() throws NumberFormatException {
+    return Integer.parseInt(unit.getText());
   }
 
   public String getPlayerColor() {
@@ -586,8 +422,6 @@ public class GameController {
 
   /*
    * Method to check if the user inputs for adding order is valid
-   *
-   * @returns true if valid inputs and false otherwise
    */
   @FXML
   boolean errorMessageShowing() {
@@ -604,22 +438,14 @@ public class GameController {
     }
 
     // Now check if the unit number is positive and greater than zero
-    boolean allZero = false;
-    for (String unitType : UnitTypeEntries.keySet()) {
-      int unitNum = getUnitNum(UnitTypeEntries.get(unitType));
-      if (unitNum == 0) {
-        allZero &= true;
-      } else {
-        allZero &= false;
-        if (unitNum < 0) {
-          errormessage.appendText(unitType + " Unit number must be positive & greater than zero.");
-          result &= false;
-        }
+    try {
+      if (getUnitNum() <= 0) {
+        errormessage.appendText("Unit number must be positive & greater than zero");
+        result &= false;
       }
-    }
-    if (allZero) {
-      errormessage.appendText("Unit number must be provided for at least one unit type.");
-      result &= false;
+    } catch (NumberFormatException e) {
+        errormessage.appendText("Unit number must be provided.");
+        result &= false;
     }
     return result;
   }
@@ -630,66 +456,23 @@ public class GameController {
 
     if (result) { // if the inputs are valid
       // Check the type order
-      if (getAction().equals("Move")) {
-        HashMap<String, Integer> units = getUnitsEntry();
-        Turn newOrder = new MoveTurn(getSource(), getDestination(), units, getPlayerColor());
-        // newOrder.printTurn();
+      if (getAction().equals("Move") || getAction().equals("Upgrade")) {
+        Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
         myTurn.addTurn(newOrder);
-        GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
       } else if (getAction().equals("Attack")) {
-        HashMap<String, Integer> units = getUnitsEntry();
-        Turn newOrder = new AttackTurn(getSource(), getDestination(), units, getPlayerColor());
-        // newOrder.printTurn();
+        Turn newOrder = new AttackTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
         myTurn.addTurn(newOrder);
-        GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
-      } else if (getAction().equals("Upgrade")) {
-        // create upgrade
-        Turn newOrder = new UpgradeTurn(getUpgradeSource(), getUpgradeFromUnitType(), getUpgradeToUnitType(),
-            getUnitNum(UpgradeUnits), getPlayerColor());
-        myTurn.addTurn(newOrder);
-        GameStatus.setText(getAction() + " order in " + getUpgradeSource() + " from " + getUpgradeFromUnitType()
-            + " to " + getUpgradeToUnitType() + " added");
-      } else if (getAction().equals("Cloak")) {
-        Turn newOrder = new CloakingTurn(getCloakingTerritory(), getPlayerColor());
-        myTurn.addTurn(newOrder);
-        GameStatus.setText(getAction() + " " + getCloakingTerritory() + " for 3 Turns");
       }
+      // theClient.theTextPlayer.takeAndSendTurn();
+      System.out.println("Added a New Order");
+      GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
     }
-    // theClient.theTextPlayer.takeAndSendTurn();
-    System.out.println("Added a New Order");
-    clearSelectedAction();
-
-  }
-
-  /**
-   * Method to create a hashmap with keys as unit type and value as number of
-   * units entered by the player Note the return hashmap includes the unit entry
-   * which were valid i.e. non-zero and positive. The returned hashmap cannot be
-   * empty as we check for all zero inputs in errorMessageShowing() method
-   */
-  private HashMap<String, Integer> getUnitsEntry() {
-    HashMap<String, Integer> units = new HashMap<>();
-    for (String unitType : UnitTypeEntries.keySet()) {
-      int unitNum = getUnitNum(UnitTypeEntries.get(unitType));
-      // Don't add if there are 0 units
-      if (unitNum > 0) {
-        units.put(unitType, unitNum);
-      }
-    }
-    return units;
-  }
-
-  @FXML
-  private void clearSelectedAction() {
-    playeraction.setValue("Select an action");
   }
 
   @FXML
   void onCommitButton(MouseEvent event) {
     // Clear the turn status box before committing new turn
     turnstatus.deleteText(0, turnstatus.getLength());
-
-    clearSelectedAction();
 
     // send TurnList to Server
     // Step-3 in Master playGame() in server
@@ -713,31 +496,10 @@ public class GameController {
     // remove the current turnlist
     myTurn.order_list.clear();
 
-    // save old map for display 'hidden' territory's infomation
-    V2Map oldMap = new V2Map(theTextPlayer.theMap);
-
     // receive updated map
     // Step-1 in Master playGame() in server
     theTextPlayer.receiveMap();
-    theTextPlayer.receiveResource();
-
-    // combine oldMap and updated Map to a new Map
-    V2Map newMap = new V2Map<>(theTextPlayer.theMap);
-    HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
-    for (String terrName : allTerritories.keySet()) {
-      // Update color of territory
-      String player_color = allTerritories.get(terrName).getColor();
-      if (player_color.equals("Hidden")) {
-        Territory<Character> hiddenTerr = (Territory<Character>) oldMap.getAllTerritories().get(terrName);
-        hiddenTerr.updateColor("Hidden");
-        newMap.updateTerritoryInMap(terrName, hiddenTerr);
-      }
-    }
-    theTextPlayer.theMap = new V2Map<Character>(newMap);
-
     updateUIMap();
-    // updateBox
-    setOrderPane();
 
     // receive game status
     // Step-2 in Master playGame() in server
@@ -758,21 +520,20 @@ public class GameController {
    * method to update the map after each turn
    */
   private void updateUIMap() {
-    // update player's resources
-
-    updatePlayerResourceDisplay();
-
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
-    for (String terrName : TerritoryNames) {
+    for (String terrName : TerritoryUnits.keySet()) {
+      // Update number of units
+      TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit()));
+
       // Update color of territory
       String player_color = allTerritories.get(terrName).getColor();
-      String button_style = "-fx-background-color: rgba(240,240,240,.3)"; // default: white
+      Color terrColor = Color.WHITE; // default
       if (player_color.equals("Green")) {
-        button_style = "-fx-background-color: rgba(60,179,113,.3)";
+        terrColor = Color.GREEN;
       } else if (player_color.equals("Blue")) {
-        button_style = "-fx-background-color: rgba(0,0,255,.3)";
+        terrColor = Color.BLUE;
       }
-      TerritoryButtons.get(terrName).setStyle(button_style);
+      TerritoryBoxes.get(terrName).setFill(terrColor);
     }
   }
 
@@ -783,42 +544,6 @@ public class GameController {
     String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
     GameStatus.setText(gamestatus);
     return gamestatus;
-  }
-
-  /**
-   * Method to show/hide specific order details pane based on selected action
-   */
-  @FXML
-  void OnSelectedOrderType() {
-    String selectedAction = getAction();
-    if (selectedAction.equals("Upgrade")) {
-      UpgradePane.setVisible(true);
-      MoveAttackPane.setVisible(false);
-      CloakingPane.setVisible(false);
-
-    } else if (selectedAction.equals("Cloak")) {
-      UpgradePane.setVisible(false);
-      MoveAttackPane.setVisible(false);
-      CloakingPane.setVisible(true);
-    } else if (selectedAction.equals("Move") || selectedAction.equals("Attack")) {
-      MoveAttackPane.setVisible(true);
-      UpgradePane.setVisible(false);
-      CloakingPane.setVisible(false);
-
-    } else {
-      MoveAttackPane.setVisible(false);
-      UpgradePane.setVisible(false);
-      CloakingPane.setVisible(false);
-
-    }
-  }
-
-  @FXML
-  void onTerrButtonClick(MouseEvent event) {
-    Button sourceButton = (Button) event.getSource();
-    String terrName = sourceButton.getText();
-
-    setTerritoryDetailsDisplay(terrName);
   }
 
 }

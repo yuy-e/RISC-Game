@@ -4,6 +4,6 @@ public class MapUIView {
   /**
    * The Map to display
    */
-  private V2Map<Character> toDisplay;
+  private V1Map<Character> toDisplay;
 
 }

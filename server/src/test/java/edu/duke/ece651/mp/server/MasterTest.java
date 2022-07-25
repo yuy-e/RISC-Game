@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import edu.duke.ece651.mp.common.V2Map;
+import edu.duke.ece651.mp.common.V1Map;
 
 public class MasterTest {
-  @Disabled
   @Test
   public void test_master() throws IOException {
     Master m = new Master(8000, 2);
@@ -60,7 +59,6 @@ public class MasterTest {
     }
   }
 
-  @Disabled
   @Test
   public void test_acceptplayers() throws IOException, InterruptedException {
     Master m = new Master(8001, 1);
@@ -74,7 +72,6 @@ public class MasterTest {
     m.close();
     s1.close();
   }
-
   @Disabled
   @Test
   public void test_sendMapToAll()
@@ -96,7 +93,6 @@ public class MasterTest {
 
   }
 
-  @Disabled
   @Test
   public void test_sendPlayerIndentityToAll() throws UnknownHostException, IOException, InterruptedException {
     Master m = new Master(8006, 1);
@@ -113,4 +109,18 @@ public class MasterTest {
     soc.close();
   }
 
+  /*
+  @Test
+  public void test_receiveObjectFromPlayer() throws IOException, InterruptedException, ClassNotFoundException {
+    Master m = new Master(8007, 1);
+    Socket soc = new Socket("127.0.0.1", 8007);
+    String msg = "for testing";
+    sendToServer_helper(soc, msg);
+    m.acceptPlayers();
+
+    sendToServer_helper(soc, msg);
+    System.out.println("Waiting for client to send msg - test");
+    String ans = (String) m.receiveObjectFromPlayer();
+    assertEquals(msg, ans);
+  }*/
 }

@@ -10,7 +10,7 @@ public class TerritoryTest {
   @Test
   public void test_name() {
 
-    Territory<Character> terr1=new Territory<Character>("Narnia","Green",new ArrayList<String>(), 2,3);
+    Territory<Character> terr1=new Territory<Character>("Narnia","Green",new ArrayList<String>(), 2);
 
     assertEquals("Narnia",terr1.getName());
   }
