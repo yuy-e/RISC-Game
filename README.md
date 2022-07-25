@@ -7,6 +7,8 @@ ECE 651: CI/CD
 [Detailed coverage](https://afsana.chowdhury.pages.oit.duke.edu/ece-651-sp-22-risk/dashboard.html)
 
 
+> **Authur** Yue Yu, Afsana Chowdhury, Airu Song
+
 ## Run
 Build the project: 
 ```
@@ -20,5 +22,24 @@ Activate the players:
 ```
 ./client/build/install/client/bin/client
 ```
+
+## Project Development
+### Eval-1 (check Eval1 branch)
+- UML model
+![Final-Eval1](https://user-images.githubusercontent.com/60654350/180877298-8a1fe671-5cb9-480c-9c89-fd035215ba01.jpg)
+
+- For Evolution 2, check Eval2 branch.
+
+### Eval-2 (check Eval2 branch)
+- UML Model
+![Eval2](https://user-images.githubusercontent.com/60654350/180878054-4b11e571-4dca-4197-9fbe-973e6dbf8123.jpg)
+- UX Prototype
+[Eval-2 Prototype.pptx](https://github.com/yuy-e/RISC-Game/files/9184887/Eval-2.Prototype.pptx)
+- Design
+[UXdocumentation.pdf](https://github.com/yuy-e/RISC-Game/files/9184885/UXdocumentation.pdf)
+
+### Eval-3 UX Views (check main branch)
+
+
 
 
