@@ -4,21 +4,25 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 
 public abstract class Turn implements Serializable {
-  public String type;
-  public String fromTerritory;
-  public String toTerritory;
-  public int num_unit;
-  // public TextPlayer player;
+  String type;
   public String player_color;
+  int num_unit; // Used only when there is one unit type (Eval-1)
+  HashMap<String, Integer> num_units; // Eval-2 change for different unit types
 
-  public Turn(String type, String fromTerritory, String toTerritory, int num_unit, String player_color) {
+  public Turn(String type, int num_unit, String player_color) {
     this.type = type;
-    this.fromTerritory = fromTerritory;
-    this.toTerritory = toTerritory;
-    this.num_unit = num_unit;
     this.player_color = player_color;
+    this.num_unit = num_unit;
+    this.num_units = null;
+  }
+
+  public Turn(String type, HashMap<String, Integer> num_units, String player_color) {
+    this.type = type;
+    this.player_color = player_color;
+    this.num_units = num_units;
   }
 
   private void writeObject(ObjectOutputStream s) throws IOException {
@@ -29,32 +33,43 @@ public abstract class Turn implements Serializable {
     s.defaultReadObject();
   }
 
-  public String getSource() {
-    return this.fromTerritory;
+  public HashMap<String, Integer> getUnitList() {
+    return num_units;
   }
 
-  public String getDestination() {
-    return this.toTerritory;
-  }
-
+  // used Only by Upgrade Turn
   public int getNumber() {
     return this.num_unit;
+  }
+
+  public int getNumber(String unitType) {
+    return this.num_units.get(unitType);
   }
 
   public String getPlayerColor() {
     return this.player_color;
   }
 
-  public String getTurnType(){
+  public String getTurnType() {
     return this.type;
   }
 
-  public void printTurn(){
+  public void printTurn() {
     System.out.println("Turn: ");
     System.out.println(this.type);
-    System.out.println(this.fromTerritory);
-    System.out.println(this.toTerritory);
-    System.out.println(this.num_unit);
     System.out.println(this.player_color);
+
+    printUnits();
   }
+
+  public void printUnits() {
+    if (num_units != null) {
+      for (String unitType : num_units.keySet()) {
+        System.out.println(unitType + "units: " + num_units.get(unitType));
+      }
+    } else {
+      System.out.println(this.num_unit);
+    }
+  }
+
 }

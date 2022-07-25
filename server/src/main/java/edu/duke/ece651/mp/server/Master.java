@@ -1,25 +1,22 @@
 package edu.duke.ece651.mp.server;
 
+import edu.duke.ece651.mp.common.*;
+
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.OwnerChecking;
-import edu.duke.ece651.mp.common.PathChecking;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.V1Map;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Master {
   final MasterServer theMasterServer;
-  public Map<Character> theMap;
+  public V2Map<Character> theMap;
   public ArrayList<String> players_identity;
   public ArrayList<TurnList> all_order_list;
   HandleOrder<Character> theHandleOrder;
+
+  private FoodResourceList food_list;
+  private TechResourceList tech_list;
 
   /**
    * Constructor
@@ -33,11 +30,21 @@ public class Master {
       this.theMasterServer = new MockMasterServer(port, num_players);
     }
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
-    this.theMap = new V1Map<Character>(this.players_identity);
+    this.theMap = new V2Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList>();
     PathChecking<Character> pcheck = new PathChecking<>(null);
     OwnerChecking<Character> ocheck = new OwnerChecking<>(pcheck);
-    this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck);
+
+    // initialize the Resources at the begining of the game
+    this.food_list = new FoodResourceList(players_identity);
+    this.tech_list = new TechResourceList(players_identity);
+    for (String playerColor : players_identity) {
+      food_list.addResource(playerColor, new FoodResource(50));
+      tech_list.addResource(playerColor, new TechResource(50));
+
+    }
+    this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck, players_identity, food_list,
+        tech_list);
   }
 
   /**
@@ -56,6 +63,16 @@ public class Master {
    */
   public void sendMapToAll() throws IOException {
     theMasterServer.sendToAll((Object) theMap);
+  }
+
+  /**
+   * Method to send current resources list to ALL the players
+   *
+   * @throws IOException
+   */
+  public void sendResourceToAll() throws IOException {
+    theMasterServer.sendToAll(food_list);
+    theMasterServer.sendToAll(tech_list);
   }
 
   public void close() throws IOException {
@@ -81,6 +98,7 @@ public class Master {
   }
 
   /**
+   * int
    * Method to receive and update orders from ALL players
    * 
    * @throws IOException
@@ -109,8 +127,11 @@ public class Master {
    * @return list of turn result
    */
   private ArrayList<String> handleOrders() {
-    Map<Character> updatedMap = theHandleOrder.handleOrders(all_order_list, theMap);
+    V2Map<Character> updatedMap = (V2Map<Character>) theHandleOrder.handleOrders(all_order_list, theMap);
     theMap = updatedMap;
+    // update the resources
+    food_list = theHandleOrder.getFoodList();
+    tech_list = theHandleOrder.getTechList();
 
     theMasterServer.all_order_list.clear(); // reset the turn list
 
@@ -120,6 +141,25 @@ public class Master {
   }
 
   /**
+   * Method to update players' resources at the end of each turn
+   *
+   * @return list of turn result
+   */
+  private void updatePlayerResource() {
+    HashMap<String, Integer> food_l = theMap.getOwnersTerritoryFoodGroups();
+    HashMap<String, Integer> tech_l = theMap.getOwnersTerritoryTechGroups();
+
+    for (Map.Entry<String, Integer> s : food_l.entrySet()) {
+      this.food_list.addResource(s.getKey(), new FoodResource(s.getValue()));
+    }
+
+    for (Map.Entry<String, Integer> s : tech_l.entrySet()) {
+      this.tech_list.addResource(s.getKey(), new TechResource(s.getValue()));
+    }
+  }
+
+  /**
+   * cl
    * Method to start a game by accepting players sending the players their colors
    * 
    * @throws IOException, InterruptedException
@@ -127,7 +167,6 @@ public class Master {
   public void initiateGame() throws IOException, InterruptedException {
     // Step-1:
     acceptPlayers();
-
 
     // Step-2:
     sendPlayerIdentityToAll();
@@ -141,8 +180,9 @@ public class Master {
   public void playGame() throws IOException, ClassNotFoundException, InterruptedException {
     String gameStatus = "Ready for accepting turn!";
     while (true) { // main playing loop
-      // Step-1:
+      // Step-1: send map and resources to player
       sendMapToAll();
+      sendResourceToAll();
 
       // Step-2:
       // Send game status to all players
@@ -165,12 +205,13 @@ public class Master {
         // update gameStatus if needed
 
         String winning_color = this.theMasterServer.detectresult(theMap);
-        if(winning_color != null) {
+        if (winning_color != null) {
           gameStatus = winning_color + " player has won!";
-        }
-        else {
+        } else {
           // add one unit to each territory
           theMap.updateMapbyOneUnit();
+          // updated the territories' produced resources to theTextPlayr
+          updatePlayerResource();
         }
 
       } else {

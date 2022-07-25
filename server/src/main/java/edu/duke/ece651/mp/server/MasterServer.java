@@ -3,23 +3,17 @@ package edu.duke.ece651.mp.server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.net.Socket;
-import java.util.ArrayList;
-import edu.duke.ece651.mp.common.V1Map;
 import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.Unit;
 
 public class MasterServer {
   public int port;
@@ -65,8 +59,6 @@ public class MasterServer {
 
       t.start();
       t.join();
-      // String rev = (String)pth.obj;
-      // System.out.print(rev);
     }
     System.out.println("Server is connected to ALL the players.");
   }
@@ -186,17 +178,18 @@ public class MasterServer {
     HashMap<String, Territory<Character>> myTerritories=theMap.getAllTerritories();
     for(String s:myTerritories.keySet()){
       Territory<Character> terr=myTerritories.get(s);
-      if(terr.getUnit()==0){continue;}
-      if(!terr.getColor().equals(color)&&color!=null){
-        flag=1;
-        color=null;
-        break;
-      }else if(color==null&&flag==0){
-        color=terr.getColor();
+      for(Unit unit: terr.getUnitList()){
+        if(terr.getUnit(unit.getUnitType())==0){continue;}
+        if(!terr.getColor().equals(color)&&color!=null){
+          flag=1;
+          color=null;
+          break;
+        }else if(color==null&&flag==0){
+          color=terr.getColor();
+        }
       }
     }
     return color;
-
   }
 
   public void printTurnList() {

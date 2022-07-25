@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.ResourceAccessMode;
 import org.junit.jupiter.api.parallel.ResourceLock;
 
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 
 public class ServerTest {
   @Disabled

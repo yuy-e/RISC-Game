@@ -12,6 +12,7 @@ import edu.duke.ece651.mp.common.MoveTurn;
 import edu.duke.ece651.mp.common.Territory;
 
 public class MoveTurnTest {
+  /*
   @Test
   public void test_MoveTurn() throws UnknownHostException, IOException{
         String t1 = "Narnia";
@@ -23,4 +24,5 @@ public class MoveTurnTest {
         assertEquals(2, mt.num_unit);
         assertEquals("Green", mt.getPlayerColor());
     }
+    */
 }

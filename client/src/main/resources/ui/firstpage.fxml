@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onStartGameButton" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.startGameButtonController">
    <children>
-      <Button fx:id="startGame" layoutX="215.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#onStartGameButton" prefHeight="96.0" prefWidth="171.0" text="START GAME" textAlignment="JUSTIFY" textFill="#96a324" />
-      <Label layoutX="233.0" layoutY="84.0" prefHeight="51.0" prefWidth="134.0" text="WELCOME" textAlignment="RIGHT" textFill="#2a18a1">
+      <Button fx:id="startGame" layoutX="263.0" layoutY="214.0" mnemonicParsing="false" onMouseClicked="#onStartGameButton" prefHeight="96.0" prefWidth="171.0" text="START GAME" textAlignment="JUSTIFY" textFill="#96a324" />
+      <Label layoutX="284.0" layoutY="109.0" prefHeight="51.0" prefWidth="134.0" text="WELCOME" textAlignment="RIGHT" textFill="#2a18a1">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextArea fx:id="connection_status" editable="false" layoutX="118.0" layoutY="290.0" prefHeight="50.0" prefWidth="375.0" style="-fx-background-color: transparent;" wrapText="true" />   
+      <Label fx:id="connection_status" accessibleRole="TEXT_AREA" layoutX="174.0" layoutY="333.0" prefHeight="44.0" prefWidth="342.0" textFill="#d70a0a" wrapText="true" />
    </children>
 </AnchorPane>

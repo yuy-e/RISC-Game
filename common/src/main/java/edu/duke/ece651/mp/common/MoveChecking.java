@@ -1,5 +1,7 @@
 package edu.duke.ece651.mp.common;
 
+import java.util.HashMap;
+
 public abstract class MoveChecking<T> {
   private final MoveChecking<T> next;
   public String moveStatus;
@@ -8,18 +10,20 @@ public abstract class MoveChecking<T> {
     this.next = next;
   }
 
-  protected abstract String checkMyRule(Map<T> map, String source, String destination, int movingunits);
+  protected abstract String checkMyRule(Map<T> map, String source, String destination, HashMap<String, Integer> allunits);
 
-  public String checkMoving(Map<T> map, String source, String destination, int movingunits, String player_color) {
+  public String checkMoving(Map<T> map, String source, String destination, HashMap<String, Integer> allunits, String player_color) {
     // update moveStatus
-    moveStatus = player_color + ": Move order from " + source + " into " + destination + " with " + movingunits
-        + " units was ";
+    moveStatus = player_color + ": Move order from " + source + " into " + destination + " was ";
 
-    if (checkMyRule(map, source, destination, movingunits) != null) {
-      return checkMyRule(map, source, destination, movingunits);
+    // First rule checking: owner checking
+    if (checkMyRule(map, source, destination, allunits) != null) {
+      return checkMyRule(map, source, destination, allunits);
     }
+
+    // Second rule checking: path checking
     if (next != null) {
-      return next.checkMoving(map, source, destination, movingunits, player_color);
+      return next.checkMoving(map, source, destination, allunits, player_color);
     }
     return null;
   }

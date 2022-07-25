@@ -42,7 +42,7 @@ public class PlayerServer {
     /**
    * Method to send object to server
    * 
-   * @param object to send
+   * @param obj to send
    */
   public void sendToServer(Object obj) {
     try {

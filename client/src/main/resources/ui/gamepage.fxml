@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
@@ -15,104 +16,86 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
-  <children>
-    <Button fx:id="commit" layoutX="518.0" layoutY="329.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="47.0" prefWidth="150.0" text="Done with turn. Commit!" textAlignment="CENTER" textFill="#f40808" wrapText="true">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Button>
-    <TextField fx:id="unit" layoutX="519.0" layoutY="152.0" prefHeight="27.0" prefWidth="149.0" promptText="How many units do you want to move">
-         <font>
-            <Font size="8.0" />
-         </font></TextField>
-      <Button fx:id="order" layoutX="559.0" layoutY="190.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
-      <ComboBox fx:id="playeraction" layoutX="519.0" layoutY="36.0" prefWidth="150.0" promptText="select a action" />
-      <ComboBox fx:id="from" layoutX="519.0" layoutY="78.0" prefWidth="150.0" promptText="from territory" />
-      <ComboBox fx:id="to" layoutX="519.0" layoutY="117.0" prefWidth="150.0" promptText="to territory" />
-      <Label fx:id="player_info" layoutX="520.0" layoutY="10.0" prefHeight="17.0" prefWidth="149.0" text="Player Info" />
+   <children>
       <GridPane id="Map" hgap="6.0" layoutX="22.0" layoutY="6.0" prefHeight="294.0" prefWidth="412.0" vgap="20.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.20001220703125" minWidth="10.0" prefWidth="104.20001220703125" />
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.20001220703125" minWidth="10.0" prefWidth="104.20001220703125" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="68.20001220703125" minWidth="10.0" prefWidth="41.79998779296875" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="61.000006103515624" minHeight="10.0" prefHeight="37.799993896484374" vgrow="SOMETIMES" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="61.000006103515624" minHeight="10.0" prefHeight="37.799993896484374" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="41.00000610351562" minHeight="10.0" prefHeight="14.399986267089844" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="41.00000610351562" minHeight="10.0" prefHeight="33.600013732910156" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="41.00000610351562" minHeight="10.0" prefHeight="33.600013732910156" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="46.79999389648438" minHeight="10.0" prefHeight="46.00000610351563" vgrow="SOMETIMES" />
-        </rowConstraints>
+         </rowConstraints>
          <children>
-            <StackPane id="Territory5" fx:id="Territory4" prefHeight="45.0" prefWidth="103.0" GridPane.rowIndex="4">
+           
+            <StackPane id="Territory4" fx:id="Territory4" prefHeight="45.0" prefWidth="103.0" GridPane.rowIndex="4">
                <children>
                   <Rectangle fx:id="Terr4Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr4Name" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr4Name" accessibleRole="TEXT_FIELD" prefHeight="55.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField id="TerrUnits" fx:id="Terr4Units" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="Units" StackPane.alignment="BOTTOM_CENTER" />
                </children>
             </StackPane>
             <StackPane id="Territory1" fx:id="Territory1" layoutX="10.0" layoutY="132.0">
                <children>
                   <Rectangle fx:id="Terr1Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr1Name" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr1Name" accessibleRole="TEXT_FIELD" prefHeight="49.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField id="TerrUnits" fx:id="Terr1Units" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="Units" StackPane.alignment="BOTTOM_CENTER" />
                </children>
             </StackPane>
             <StackPane id="Territory2" fx:id="Territory2" layoutX="10.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Rectangle fx:id="Terr2Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr2Name" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr2Name" accessibleRole="TEXT_FIELD" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField id="TerrUnits" fx:id="Terr2Units" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="Units" StackPane.alignment="BOTTOM_CENTER" />
                </children>
             </StackPane>
             <StackPane id="Territory3" fx:id="Territory3" layoutX="118.0" layoutY="10.0" GridPane.columnIndex="4">
                <children>
                   <Rectangle fx:id="Terr3Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr3Name" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr3Name" accessibleRole="TEXT_FIELD" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField id="TerrUnits" fx:id="Terr3Units" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="Units" StackPane.alignment="BOTTOM_CENTER" />
                </children>
             </StackPane>
             <StackPane id="Territory6" fx:id="Territory5" layoutX="226.0" layoutY="10.0" prefHeight="42.0" prefWidth="103.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <children>
                   <Rectangle fx:id="Terr5Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr5Name" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr5Name" accessibleRole="TEXT_FIELD" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField id="TerrUnits" fx:id="Terr5Units" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="Units" StackPane.alignment="BOTTOM_CENTER" />
                </children>
             </StackPane>
             <StackPane id="Territory4" fx:id="Territory6" layoutX="118.0" layoutY="132.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <children>
                   <Rectangle fx:id="Terr6Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr6Name" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr6Name" accessibleRole="TEXT_FIELD" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField id="TerrUnits" fx:id="Terr6Units" accessibleRole="TEXT_FIELD" style="-fx-background-color: transparent;" text="Units" StackPane.alignment="BOTTOM_CENTER" />
                </children>
             </StackPane>
          </children>
-       </GridPane>
+      </GridPane>
       <Line fx:id="Line1to4" endX="14.800006866455078" endY="-87.4000015258789" layoutX="14.0" layoutY="139.0" startX="14.800006866455078" startY="114.20001220703125" visible="false" />
       <Line fx:id="Line4to6" endX="261.60003662109375" endY="86.60000610351562" layoutX="24.0" layoutY="149.0" startX="93.19999694824219" startY="134.80001831054688" visible="false" />
       <Line fx:id="Line2to4" endX="92.40000915527344" endY="-39.400001525878906" layoutX="24.0" layoutY="149.0" startX="14.400012969970703" startY="104.20001220703125" visible="false" />
@@ -128,8 +111,76 @@
       <Line fx:id="Line1to6" endX="-24.599990844726562" endY="44.399993896484375" layoutX="277.0" layoutY="168.0" startX="-216.8000030517578" startY="-116.9000015258789" visible="false" />
       <Line fx:id="Line2to5" endX="-75.39997863769531" endY="-68.00000762939453" layoutX="287.0" layoutY="178.0" startX="133.0" startY="75.20001220703125" visible="false" />
       <Line fx:id="Line1to5" endX="-170.90711975097656" endY="-146.30709838867188" layoutX="287.0" layoutY="168.0" startX="155.0" startY="85.20001220703125" visible="false" />
-      <TextField fx:id="GameStatus" editable="false" layoutX="9.0" layoutY="414.0" prefHeight="30.0" prefWidth="447.0" />
-      <TextArea fx:id="turnstatus" editable="false" layoutX="7.0" layoutY="314.0" prefHeight="94.0" prefWidth="447.0" promptText="Turn Status" wrapText="true"/>
-      <TextArea fx:id="errormessage" editable="false" layoutX="508.0" layoutY="228.0" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: transparent;" wrapText="true"/>
+      <Button fx:id="commit" layoutX="493.0" layoutY="417.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" textFill="#e10909" />
+      <AnchorPane layoutX="65.0" layoutY="52.0" prefHeight="38.0" prefWidth="150.0" />
+      <Label fx:id="player_info" layoutX="492.0" layoutY="5.0" prefHeight="26.0" prefWidth="149.0" text="Player Info: " textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Pane fx:id="MoveAttackPane" layoutX="491.0" layoutY="68.0" visible="false">
+         <children>
+            <TextField fx:id="Units_A" layoutX="69.0" layoutY="61.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </TextField>
+            <ComboBox fx:id="from" prefWidth="150.0" promptText="from territory" />
+            <ComboBox fx:id="to" layoutY="30.0" prefWidth="150.0" promptText="to territory" />
+            <TextField fx:id="Units_B" layoutX="70.0" layoutY="91.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="Units_C" layoutX="71.0" layoutY="119.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="Units_D" layoutX="73.0" layoutY="148.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="Units_E" layoutX="75.0" layoutY="177.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="Units_F" layoutX="74.0" layoutY="206.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="Units_G" layoutX="74.0" layoutY="236.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </TextField>
+            <Label layoutX="2.0" layoutY="61.0" prefHeight="26.0" prefWidth="62.0" text="A Units:" />
+            <Label layoutX="3.0" layoutY="91.0" prefHeight="26.0" prefWidth="62.0" text="B Units:" />
+            <Label layoutX="3.0" layoutY="119.0" prefHeight="26.0" prefWidth="62.0" text="C Units:" />
+            <Label layoutX="3.0" layoutY="149.0" prefHeight="26.0" prefWidth="62.0" text="D Units:" />
+            <Label layoutX="4.0" layoutY="178.0" prefHeight="26.0" prefWidth="62.0" text="E Units:" />
+            <Label layoutX="5.0" layoutY="207.0" prefHeight="26.0" prefWidth="62.0" text="F Units:" />
+            <Label layoutX="5.0" layoutY="237.0" prefHeight="26.0" prefWidth="62.0" text="G Units:" />
+         </children>
+      </Pane>
+      <Button fx:id="order" layoutX="529.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
+      <ComboBox fx:id="playeraction" layoutX="491.0" layoutY="35.0" onAction="#OnSelectedOrderType" prefHeight="26.0" prefWidth="170.0" promptText="Select an action" />
+      <TextField fx:id="GameStatus" editable="false" layoutX="23.0" layoutY="407.0" prefHeight="30.0" prefWidth="422.0" promptText="Game Status:" />
+      <TextArea fx:id="turnstatus" editable="false" layoutX="23.0" layoutY="316.0" prefHeight="84.0" prefWidth="422.0" promptText="Turn Status: No turns yet" wrapText="true" />
+      <TextArea fx:id="errormessage" editable="false" layoutX="458.0" layoutY="365.0" prefHeight="41.0" prefWidth="218.0" wrapText="true" />
+      <Pane fx:id="UpgradePane" layoutX="491.0" layoutY="77.0" visible="false">
+         <children>
+            <ComboBox fx:id="UpgradeTerritory" layoutX="1.0" prefWidth="150.0" promptText="in which territory" />
+            <ComboBox fx:id="UpgradeFrom" layoutY="47.0" prefWidth="150.0" promptText="From unit type" />
+            <TextField fx:id="UpgradeUnits" layoutX="4.0" layoutY="136.0" prefHeight="26.0" prefWidth="150.0" promptText="How many units to upgrade?">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </TextField>
+            <ComboBox fx:id="UpgradeTo" layoutX="1.0" layoutY="91.0" prefWidth="150.0" promptText="To unit type" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

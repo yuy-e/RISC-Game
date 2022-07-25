@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import org.junit.jupiter.api.Test;
 
 public class AttackTurnTest {
+  /*
   @Test
   public void test_AttackTurn() throws UnknownHostException, IOException{
         String t1 = "Narnia";
@@ -18,5 +19,6 @@ public class AttackTurnTest {
         assertEquals(2, mt.num_unit);
         assertEquals("Green", mt.getPlayerColor());
     }
+    */
 }
 

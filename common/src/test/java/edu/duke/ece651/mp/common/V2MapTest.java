@@ -12,14 +12,14 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-public class V1MapTest {
+public class V2MapTest {
   @Test
 
   public void checkcontents() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     //OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
     //PathChecking<Character> pcheck=new PathChecking<>(ocheck);
-    V1Map<Character> map = new V1Map<>(players_colors);
+    V2Map<Character> map = new V2Map<>(players_colors);
     assertEquals(map.myTerritories.containsKey("Narnia"), true);
     assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Midemio"), true);
     assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Elantris"), true);
@@ -30,8 +30,8 @@ public class V1MapTest {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     //OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
     //PathChecking<Character> pcheck=new PathChecking<>(ocheck);
-    V1Map<Character> mapOrg = new V1Map<Character>(players_colors);
-    V1Map<Character> mapNew = null;
+    V2Map<Character> mapOrg = new V2Map<Character>(players_colors);
+    V2Map<Character> mapNew = null;
 
     // Serialize the original class object
     try {
@@ -49,7 +49,7 @@ public class V1MapTest {
     try {
       FileInputStream fi = new FileInputStream("map.tmp");
       ObjectInputStream si = new ObjectInputStream(fi);
-      mapNew = (V1Map<Character>) si.readObject();
+      mapNew = (V2Map<Character>) si.readObject();
       si.close();
     } catch (Exception e) {
       e.printStackTrace();
@@ -64,7 +64,7 @@ public class V1MapTest {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     //OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
     //PathChecking<Character> pcheck=new PathChecking<>(ocheck);
-    V1Map<Character> map = new V1Map<>(players_colors);
+    V2Map<Character> map = new V2Map<>(players_colors);
     HashMap<String, ArrayList<String>> terrGroups = map.getOwnersTerritoryGroups();
 
     ArrayList<String> expectedGreenTerritories = new ArrayList<>();
