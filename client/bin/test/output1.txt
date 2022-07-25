@@ -1,0 +1,40 @@
+My player's color: Green
+Green player:
+-----------
+8 units in Narnia (next to: Midemio, Elantris)
+3 units in Midemio (next to: Narnia, Oz)
+12 units in Oz (next to: Midemio, Roshar)
+
+Blue player:
+-----------
+7 units in Elantris (next to: Scadnal, Narnia)
+6 units in Roshar (next to: Oz, Scadnal)
+10 units in Scadnal (next to: Roshar, Elantris)
+
+You are the Green player and it's time to take your turn!.
+There are two types of orders that you may issue: move and attack.You may issue any number of each type of these orders in a turn.Once you're done enetering your orders, hit D and your turn will be sent to the server.
+
+
+Enter new order (M or A or D)
+(M)ove
+(A)ttack
+(D)one
+Requested order: Move
+- From which territory? (Enter the option# from following list)
+(1) Narnia
+(2) Midemio
+(3) Oz
+You selected Narnia as the source.
+- To which territory? (Enter the option# from following list)
+(1) Elantris
+(2) Roshar
+(3) Scadnal
+You selected Roshar as the destination.
+- How many units?
+Requested 3 units.
+
+Enter new order (M or A or D)
+(M)ove
+(A)ttack
+(D)one
+Done with the turn!

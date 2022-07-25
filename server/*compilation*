@@ -1,0 +1,143 @@
+-*- mode: compilation; default-directory: "~/ece-651-sp-22-risk/server/" -*-
+Compilation started at Sun Mar 13 17:36:22
+
+/usr/local/bin/gradle clean cloverGenerateReport
+> Task :buildSrc:extractPluginRequests UP-TO-DATE
+> Task :buildSrc:generatePluginAdapters UP-TO-DATE
+> Task :buildSrc:compileJava UP-TO-DATE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:compileTestJava NO-SOURCE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:test NO-SOURCE
+> Task :buildSrc:validatePlugins UP-TO-DATE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build UP-TO-DATE
+> Task :server:clean
+> Task :common:compileJava UP-TO-DATE
+> Task :common:processResources NO-SOURCE
+> Task :common:classes UP-TO-DATE
+> Task :common:jar UP-TO-DATE
+> Task :server:compileJava
+> Task :server:processResources NO-SOURCE
+> Task :server:classes
+> Task :server:compileTestJava
+> Task :server:processTestResources
+> Task :server:testClasses
+> Task :server:cloverInstrumentCodeForTest
+
+> Task :server:test FAILED
+
+MasterServerTest > test_acceptplayers() STANDARD_OUT
+    Server is waiting...
+    Server accepted.
+    Server is connected to ALL the players.
+
+MasterServerTest > test_acceptplayers() STANDARD_ERROR
+    java.net.SocketException: Socket closed
+
+MasterServerTest STANDARD_ERROR
+    	at java.base/sun.nio.ch.NioSocketImpl.endRead(NioSocketImpl.java:248)
+    	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:327)
+    	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+    	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+
+MasterServerTest > test_sendToAll() STANDARD_ERROR
+    	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:966)
+    	at java.base/sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:270)
+    	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:313)
+    	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:188)
+    	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:177)
+    	at java.base/java.io.BufferedReader.fill(BufferedReader.java:162)
+    	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:329)
+    	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:396)
+    	at edu.duke.ece651.mp.server.PlayerThread.run(PlayerThread.java:24)
+
+MasterServerTest > test_sendToAll() STANDARD_OUT
+    Server is waiting...
+    Server accepted.
+    Server is connected to ALL the players.
+
+MasterServerTest > test_sendToAll() STANDARD_ERROR
+    java.net.SocketException: Socket closed
+    	at java.base/sun.nio.ch.NioSocketImpl.endRead(NioSocketImpl.java:248)
+    	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:327)
+
+MasterServerTest STANDARD_ERROR
+    	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+    	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+    	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:966)
+    	at java.base/sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:270)
+    	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:313)
+    	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:188)
+    	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:177)
+    	at java.base/java.io.BufferedReader.fill(BufferedReader.java:162)
+    	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:329)
+    	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:396)
+    	at edu.duke.ece651.mp.server.PlayerThread.run(PlayerThread.java:24)
+
+MasterTest > test_sendMapToAll() STANDARD_OUT
+    Server is waiting...
+    Server accepted.
+    Server is connected to ALL the players.
+
+MasterTest > test_sendMapToAll() STANDARD_ERROR
+    java.net.SocketException: Socket closed
+
+Gradle Test Executor 16 STANDARD_ERROR
+    	at java.base/sun.nio.ch.NioSocketImpl.endRead(NioSocketImpl.java:248)
+    	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:327)
+    	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:350)
+    	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:803)
+    	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:966)
+    	at java.base/sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:270)
+    	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:313)
+    	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:188)
+    	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:177)
+    	at java.base/java.io.BufferedReader.fill(BufferedReader.java:162)
+    	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:329)
+    	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:396)
+    	at edu.duke.ece651.mp.server.PlayerThread.run(PlayerThread.java:24)
+
+OwnerCheckingTest > test_chain() FAILED
+    org.opentest4j.AssertionFailedError: expected: <not same onwer> but was: <not same owner>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+        at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+        at app//edu.duke.ece651.mp.server.OwnerCheckingTest.test_chain(OwnerCheckingTest.java:30)
+
+11 tests completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':server:test'.
+> There were failing tests. See the report at: file:///Users/songairu/ece-651-sp-22-risk/server/build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.3.3/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD FAILED in 3s
+17 actionable tasks: 6 executed, 11 up-to-date
+
+Compilation exited abnormally with code 1 at Sun Mar 13 17:36:26

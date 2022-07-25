@@ -1,0 +1,5 @@
+Server is waiting...
+Server is connected to ALL the players.
+Sending color to player: Green
+Sending color to player: Blue
+Server received lists of orders from all players.
