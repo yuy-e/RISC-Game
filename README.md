@@ -8,7 +8,7 @@ ECE 651: CI/CD
 
 > **Authur** Yue Yu, Afsana Chowdhury, Airu Song
 
-# Table of Contents
+## Table of Contents
 1. [How to Run?](#run)
 2. [How to play the game?](#game)
 3. [UX principle](#ux)
