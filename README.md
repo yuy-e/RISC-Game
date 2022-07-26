@@ -6,10 +6,16 @@ ECE 651: CI/CD
 ## Coverage
 [Detailed coverage](https://afsana.chowdhury.pages.oit.duke.edu/ece-651-sp-22-risk/dashboard.html)
 
-
 > **Authur** Yue Yu, Afsana Chowdhury, Airu Song
 
-## Run
+# Table of Contents
+1. [How to Run?](#run)
+2. [How to play the game?](#game)
+3. [UX principle](#ux)
+4. [Project Development](#develop)
+5. [Game Preview](#preview)
+
+## How to Run <a name="run"></a>
 Build the project: 
 ```
 ./gradlew installDist
@@ -23,7 +29,7 @@ Activate the players:
 ./client/build/install/client/bin/client
 ```
 
-## How to play the game?
+## How to play the game? <a name="game"></a>
 
 ```Left Pane:``` Display resources productions and military deployment of a territory.
 ```Right Pane:``` Allows the player to choose, add, and commit their actions.
@@ -57,7 +63,7 @@ Specifically, the cost of each move is (total size of territories moved through)
 
 >The players enter 0 or more moves, then commit their moves. Once all players commit their moves, the game resolves the outcome of all moves, then reports that to the players, then the next turn happens in the same fashion. A player wins when he/she controls all territories, and loses when he/she no longer controls any territories.
 
-## UX Principles
+## UX Principles <a name="ux"></a>
 We use the MVC design pattern and follow the following UX principles:
 
 - **Figure-Gound and Focal Point:** We set territories in different colors indicating owned by different players, and the font color of the action would turn white to indicate their choice, making our app more user-friendly.
@@ -65,13 +71,13 @@ We use the MVC design pattern and follow the following UX principles:
 - **Similarity, Proximity, and Common Region:**
 For displaying the pane of actions and choices, we use similar boxes and place them together(in a Turn Pane) to indicate they belong to the same action.
 
-## Project Development
+## Project Development <a name="develop"></a>
 ### Eval-1 (check Eval1 branch)
 - UML model 
 https://github.com/yuy-e/RISC-Game/blob/main/UML-Eval1.jpg
 ![Final-Eval1](https://user-images.githubusercontent.com/60654350/180877298-8a1fe671-5cb9-480c-9c89-fd035215ba01.jpg)
 
-### Eval-2 (check Eval2 branch)
+### Eval-2 (check Eval2 branch) 
 - UML Model
 https://github.com/yuy-e/RISC-Game/blob/main/UML-Eval2.jpg
 ![Eval2](https://user-images.githubusercontent.com/60654350/180878054-4b11e571-4dca-4197-9fbe-973e6dbf8123.jpg)
@@ -80,7 +86,7 @@ https://github.com/yuy-e/RISC-Game/blob/main/UML-Eval2.jpg
 - Design
 https://github.com/yuy-e/RISC-Game/blob/main/UXdocumentation.pdf
 
-### Eval-3 Game Preview (check main branch)
+### Eval-3 Game Preview (check main branch) <a name="preview"></a>
 ![5981658782331_ pic_hd](https://user-images.githubusercontent.com/60654350/180886078-06c5639c-f428-47b4-9e34-60b9534e821e.jpg)
 
 ![6041658782463_ pic_hd](https://user-images.githubusercontent.com/60654350/180886099-1f890152-6690-48c2-ae75-2751e31c9c83.jpg)
