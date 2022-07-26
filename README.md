@@ -22,14 +22,54 @@ Activate the players:
 ```
 ./client/build/install/client/bin/client
 ```
-## About the Game
+
+## How to play the game?
+
+```Left Pane:``` Display resources productions and military deployment of a territory.
+```Right Pane:``` Allows the player to choose, add, commit their actions.
+```Resource Pane:``` Display food and tech resources of players.
+
+```Resources:``` Player's resources will increase by adding the resource production of each territory that they own at the end of each turn. ```Unit types:``` guards, infantry, archer, cavalry, dwarves, orcs, elves, spy. 
+
+```Move:``` a player can relocate units within their own territories. Move Actions will cost food resources according to the number of moving units and 'size' of territories. 
+Specifically, the cost of each move is (total size of territories moved through) * (number of units moved), the game will pick the minimum total cost valid path when determing the cost.  
+
+>'size': the cost to move throught a territory  
+
+```Attack:``` a player can send their units to an adjacent territory controlled by a different player to attack. Attack actions will cost 1 food resource per unit attacking.
+
+```Upgrade:``` a player can upgrade level of units, which costs tech resources. Upgrading a unit increases its combat bonuses. 
+
+```Cloak:``` a player can cloak a territory, which will cost 20 tech resources and hide that territory from view for 3 turns.
+
+```Fog of War:``` A player can only see their own territories and adjacent territories. They can use SPY unit to detect resources productions and military deployment of enemie's territories. If they can't see a territory anymore, they can still see old infomation of enemie's territories.
+
+```Combat resolutions:```
+- The server rolls two 20-sided dice (one for the attacker, one for the defender). Each roll is modified by adding a bonus for the type of unit involved. The side with the lower roll losts 1 unit.
+
+- The order of evaluation alternates between the highest-bonus attacker unit paired with the lowest-bonus defender unit, and the lowest-bonus attacker unit paired with the highest-bonus defender unit. 
+
+- If player A attacks territory X with units from multiple of her own territories, they count as a single combined force.
+
+- If multiple players attack the same territories, each attack is resolved sequentially, with the winner of the first attack being the defender in subsequent attacks.
+
+- If units from territory X attack territory Y, and at the same time, units from territory Y attack territory X, then they are assumed to take drastically different routes between their territories, missing each other, and ending up at their destination with no combat in the middle.
+
+>The players enter 0 or more moves, then commit their moves. Once all players commit their moves, the game resolves the outcome of all moves, then reports that to the players, then the next turn happens in the same fashion. A player wins when he/she controls all territories, and loses when he/she no longer controls any territories.
+
+## UX Principles
+We use the MVC design pattern and follow the following UX principles:
+
+- **Figure-Gound and Focal Point:** We set territories in different colors indicating owned by different players, and the font color of the action would turn white to indicate their choice, making our app more user-friendly.
+
+- **Similarity, Proximity, and Common Region:**
+For displaying the pane of actions and choices, we use similar boxes and place them together(in a Turn Pane) to indicate they belong to the same action.
 
 ## Project Development
 ### Eval-1 (check Eval1 branch)
 - UML model 
 https://github.com/yuy-e/RISC-Game/blob/main/UML-Eval1.jpg
 ![Final-Eval1](https://user-images.githubusercontent.com/60654350/180877298-8a1fe671-5cb9-480c-9c89-fd035215ba01.jpg)
-
 
 ### Eval-2 (check Eval2 branch)
 - UML Model
@@ -44,14 +84,5 @@ https://github.com/yuy-e/RISC-Game/blob/main/UXdocumentation.pdf
 ![5981658782331_ pic_hd](https://user-images.githubusercontent.com/60654350/180886078-06c5639c-f428-47b4-9e34-60b9534e821e.jpg)
 
 ![6041658782463_ pic_hd](https://user-images.githubusercontent.com/60654350/180886099-1f890152-6690-48c2-ae75-2751e31c9c83.jpg)
-
-## UX Principles
-We use the MVC design pattern and follow the following UX principles:
-
-- **Figure-Gound and Focal Point:** We set territories in different colors indicating owned by different players, and the font color of the action would turn white to indicate their choice, making our app more user-friendly.
-
-- **Similarity, Proximity, and Common Region:**
-For displaying the pane of actions and choices, we use similar boxes and place them together(in a Turn Pane) to indicate they belong to the same action.
-
 
 
