@@ -26,23 +26,23 @@ Activate the players:
 ## How to play the game?
 
 ```Left Pane:``` Display resources productions and military deployment of a territory.
-```Right Pane:``` Allows the player to choose, add, commit their actions.
+```Right Pane:``` Allows the player to choose, add, and commit their actions.
 ```Resource Pane:``` Display food and tech resources of players.
 
 ```Resources:``` Player's resources will increase by adding the resource production of each territory that they own at the end of each turn. ```Unit types:``` guards, infantry, archer, cavalry, dwarves, orcs, elves, spy. 
 
-```Move:``` a player can relocate units within their own territories. Move Actions will cost food resources according to the number of moving units and 'size' of territories. 
-Specifically, the cost of each move is (total size of territories moved through) * (number of units moved), the game will pick the minimum total cost valid path when determing the cost.  
+```Move:``` a player can relocate units within their territories. Move Actions will cost food resources according to the number of moving units and the 'size' of territories. 
+Specifically, the cost of each move is (total size of territories moved through) * (number of units moved), and the game will pick the minimum total cost valid path when determining the cost.  
 
->'size': the cost to move throught a territory  
+>'size': the cost to move through a territory  
 
 ```Attack:``` a player can send their units to an adjacent territory controlled by a different player to attack. Attack actions will cost 1 food resource per unit attacking.
 
-```Upgrade:``` a player can upgrade level of units, which costs tech resources. Upgrading a unit increases its combat bonuses. 
+```Upgrade:``` a player can upgrade the level of units, which costs tech resources. Upgrading a unit increases its combat bonuses. 
 
 ```Cloak:``` a player can cloak a territory, which will cost 20 tech resources and hide that territory from view for 3 turns.
 
-```Fog of War:``` A player can only see their own territories and adjacent territories. They can use SPY unit to detect resources productions and military deployment of enemie's territories. If they can't see a territory anymore, they can still see old infomation of enemie's territories.
+```Fog of War:``` A player can only see their territories and adjacent territories. They can use SPY units to detect resources productions and military deployment of enemie's territories. If they can't see a territory anymore, they can still see old information about enemies' territories.
 
 ```Combat resolutions:```
 - The server rolls two 20-sided dice (one for the attacker, one for the defender). Each roll is modified by adding a bonus for the type of unit involved. The side with the lower roll losts 1 unit.
