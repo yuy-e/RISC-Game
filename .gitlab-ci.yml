@@ -10,7 +10,6 @@ stages:
    - test
    - coverage
    - deploy
-   - test-deployment
 
    
 build:
@@ -32,7 +31,7 @@ deploy:
   tags:
      - ece651
   stage: deploy
-  script: scripts/run-tests-in-docker.sh
+  script: ./scripts/redeploy.sh
 
 pages:
  stage: coverage
